@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Josh Moran</title>
+<meta name="description" content="Josh Moran is an audio post-production professional in Los Angeles, mixing for film, television, animation and localization.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* Layout: one left-aligned column on a 12-col grid; a waveform strip under the name, then a session-style list of work. */
+  :root {
+    --bg: #F6F7F8;
+    --surface: #ECEEF0;
+    --fg: #121418;
+    --muted: #5C636D;
+    --line: #D6D9DE;
+    --accent: #2F45E8;
+    --wave: #B9BEC6;
+
+    --font-body: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+    --gutter: 24px;
+    --maxw: 1120px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0D0F12;
+      --surface: #15181D;
+      --fg: #ECEEF1;
+      --muted: #8D95A1;
+      --line: #252A31;
+      --accent: #8EA0FF;
+      --wave: #2C323B;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0D0F12;
+    --surface: #15181D;
+    --fg: #ECEEF1;
+    --muted: #8D95A1;
+    --line: #252A31;
+    --accent: #8EA0FF;
+    --wave: #2C323B;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  a { color: inherit; text-decoration: none; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+  ::selection { background: var(--accent); color: var(--bg); }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Header */
+  header.top {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding-block: 24px;
+  }
+  .mark { font-weight: 500; letter-spacing: -0.01em; }
+  nav { display: flex; gap: 24px; flex-wrap: wrap; justify-content: flex-end; }
+  nav a { color: var(--muted); font-size: 14px; transition: color .2s; }
+  nav a:hover { color: var(--fg); }
+
+  /* Hero */
+  .hero { padding-top: clamp(40px, 9vw, 112px); }
+  .status { display: inline-flex; align-items: center; gap: 10px; }
+  .status i {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  h1 {
+    margin: 20px 0 0;
+    font-weight: 500;
+    font-size: clamp(3rem, 10.5vw, 8.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 28px 0 0;
+    max-width: 38ch;
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    line-height: 1.4;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    color: var(--muted);
+  }
+  .lede b { font-weight: 400; color: var(--fg); }
+
+  /* Waveform strip */
+  .wave {
+    margin-top: clamp(40px, 7vw, 80px);
+    height: 88px;
+    display: flex; align-items: center; gap: 3px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding-block: 12px;
+    overflow: hidden;
+  }
+  .wave span {
+    flex: 1 1 0; min-width: 2px; max-width: 6px;
+    background: var(--wave);
+    border-radius: 1px;
+    height: var(--h, 30%);
+    transition: transform .25s cubic-bezier(.2,.7,.2,1), background-color .25s;
+  }
+  .wave span.hot { background: var(--accent); }
+  .wave-meta { display: flex; justify-content: space-between; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+
+  /* Sections */
+  section { padding-top: clamp(64px, 10vw, 128px); }
+  .row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); }
+  .row > .label { grid-column: 1 / span 3; padding-top: 6px; }
+  .row > .body { grid-column: 4 / span 9; min-width: 0; }
+
+  .about p { margin: 0; font-size: clamp(1.2rem, 2.4vw, 1.65rem); line-height: 1.45; letter-spacing: -0.015em; font-weight: 300; max-width: 34em; text-wrap: pretty; }
+  .about p b { font-weight: 400; }
+
+  /* Work list */
+  .job {
+    display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--gutter);
+    padding-block: 22px; border-top: 1px solid var(--line);
+  }
+  .job:last-child { border-bottom: 1px solid var(--line); }
+  .job .when { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-top: 4px; font-variant-numeric: tabular-nums; }
+  .job h3 { margin: 0; font-size: 1.25rem; font-weight: 500; letter-spacing: -0.015em; line-height: 1.3; }
+  .job .where { margin: 2px 0 0; color: var(--muted); }
+  .job .note { margin: 12px 0 0; color: var(--muted); font-size: 15px; max-width: 56ch; }
+  .job.now .when { color: var(--accent); }
+
+  /* Capabilities */
+  .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
+  .cols h4 { margin: 0 0 14px; font-weight: 400; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .chips li {
+    font-family: var(--font-mono); font-size: 13px;
+    padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+  }
+  .chips.formats li { border-color: var(--fg); }
+  .plain { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+  .plain li { padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+
+  /* Clients */
+  .clients { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 28px; font-size: clamp(1.1rem, 2vw, 1.4rem); letter-spacing: -0.01em; font-weight: 300; }
+
+  /* Facts */
+  dl.facts { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 28px var(--gutter); }
+  dl.facts dt { margin-bottom: 4px; }
+  dl.facts dd { margin: 0; }
+  dl.facts small { display: block; color: var(--muted); font-size: 14px; }
+
+  /* Contact */
+  .contact { padding-bottom: clamp(56px, 8vw, 96px); }
+  .big-link {
+    display: inline-block;
+    font-size: clamp(1.6rem, 5.4vw, 3.6rem); letter-spacing: -0.035em; font-weight: 400; line-height: 1.1;
+    overflow-wrap: anywhere;
+    border-bottom: 1px solid var(--line);
+    transition: border-color .2s, color .2s;
+  }
+  .big-link:hover { color: var(--accent); border-color: var(--accent); }
+  .contact .small { margin: 20px 0 0; display: flex; gap: 24px; flex-wrap: wrap; align-items: center; }
+  .contact .small a { color: var(--muted); transition: color .2s; }
+  .contact .small a:hover { color: var(--fg); }
+  button.copy {
+    font: inherit; font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+    background: none; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer;
+    transition: color .2s, border-color .2s;
+  }
+  button.copy:hover { color: var(--fg); border-color: var(--fg); }
+
+  footer { border-top: 1px solid var(--line); padding-block: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media (max-width: 800px) {
+    .row > .label { grid-column: 1 / -1; padding-top: 0; }
+    .row > .body { grid-column: 1 / -1; }
+    .job { grid-template-columns: 1fr; gap: 4px; }
+    .cols, dl.facts { grid-template-columns: 1fr; }
+    nav { gap: 16px; }
+    .wave { height: 64px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .wave span, a, button { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="#top">Josh Moran</a>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a>
+      <a href="#craft">Craft</a>
+      <a href="#clients">Clients</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <span class="label status"><i aria-hidden="true"></i>Mix Assistant at Iyuno &middot; Burbank, CA</span>
+      <h1>Josh Moran</h1>
+      <p class="lede">Audio post-production for <b>film, television, animation</b> and localization.</p>
+
+      <div class="wave" id="wave" aria-hidden="true"></div>
+      <div class="wave-meta label" aria-hidden="true">
+        <span>Stereo</span><span>5.1</span><span>7.1</span><span>Dolby Atmos</span>
+      </div>
+    </div>
+
+    <section class="about" id="about">
+      <div class="row">
+        <div class="label">About</div>
+        <div class="body">
+          <p>I mix for film, television, animation and localization. Day to day that means <b>dialogue editing, mix preparation, session conforming, QC and troubleshooting</b>, across stereo, 5.1, 7.1 and Dolby Atmos workflows. I started in music, recording artists in Los Angeles, and moved into post.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="row">
+        <div class="label">Experience</div>
+        <div class="body">
+          <article class="job now">
+            <div class="when">Jun 2026 &ndash; Present</div>
+            <div>
+              <h3>Mix Assistant</h3>
+              <p class="where">Iyuno &middot; Burbank, California</p>
+            </div>
+          </article>
+          <article class="job">
+            <div class="when">Jun 2023 &ndash; May 2026</div>
+            <div>
+              <h3>Dialogue Editor</h3>
+              <p class="where">Iyuno &middot; Burbank, California</p>
+            </div>
+          </article>
+          <article class="job">
+            <div class="when">Mar 2023 &ndash; Feb 2024</div>
+            <div>
+              <h3>Assistant Re-Recording Mixer</h3>
+              <p class="where">Backyard Sessions &middot; Burbank, California</p>
+            </div>
+          </article>
+          <article class="job">
+            <div class="when">Sep 2022 &ndash; Feb 2023</div>
+            <div>
+              <h3>Assistant Dialogue Editor</h3>
+              <p class="where">Skylark Sound Studios &middot; Burbank, California</p>
+            </div>
+          </article>
+          <article class="job">
+            <div class="when">Oct 2017 &ndash; Dec 2019</div>
+            <div>
+              <h3>Recording Engineer &amp; Co-Owner</h3>
+              <p class="where">In Flight Music Group &middot; Los Angeles, California</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="craft">
+      <div class="row">
+        <div class="label">Craft</div>
+        <div class="body">
+          <div class="cols">
+            <div>
+              <h4 class="label">Delivery formats</h4>
+              <ul class="chips formats">
+                <li>Stereo</li><li>5.1</li><li>7.1</li><li>Dolby Atmos</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="label">Top skills</h4>
+              <ul class="chips">
+                <li>Re-recording mixing</li><li>Audio post production</li><li>Storytelling</li>
+              </ul>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <h4 class="label">Day to day</h4>
+              <ul class="chips">
+                <li>Dialogue editing</li><li>Mix preparation</li><li>Session conforming</li><li>QC</li><li>Troubleshooting</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="clients">
+      <div class="row">
+        <div class="label">Studio clients<br>2017 &ndash; 2019</div>
+        <div class="body">
+          <ul class="clients">
+            <li>Chappell Roan</li>
+            <li>Andy Grammer</li>
+            <li>Chet Faker</li>
+            <li>Royal &amp; The Serpent</li>
+            <li>J&ouml;rg H&uuml;ttner</li>
+            <li>James Cherry</li>
+            <li>The Leers</li>
+            <li>CBS</li>
+            <li>Nike</li>
+            <li>Pigeons &amp; Planes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="background">
+      <div class="row">
+        <div class="label">Background</div>
+        <div class="body">
+          <dl class="facts">
+            <div>
+              <dt class="label">Education</dt>
+              <dd>Los Angeles Film School<small>A.A., Recording Arts &middot; 2015 &ndash; 2017</small></dd>
+            </div>
+            <div>
+              <dt class="label">Languages</dt>
+              <dd>English<small>Native or bilingual</small></dd>
+              <dd style="margin-top:10px">Spanish<small>Professional working</small></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="row">
+        <div class="label">Contact</div>
+        <div class="body">
+          <a class="big-link" id="email" href="mailto:joshtmoran@gmail.com">joshtmoran@gmail.com</a>
+          <p class="small">
+            <a href="https://www.linkedin.com/in/joshtmoran" target="_blank" rel="noopener">LinkedIn</a>
+            <span class="label">Los Angeles, CA</span>
+            <button class="copy" id="copy" type="button">Copy email</button>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="label">
+    <span>&copy; 2026 Josh Moran</span>
+    <span>Los Angeles, CA</span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    // Waveform strip: deterministic shape so it looks the same on every load.
+    var wave = document.getElementById('wave');
+    var bars = [];
+    function build() {
+      wave.innerHTML = '';
+      bars = [];
+      var n = Math.max(40, Math.min(160, Math.floor(wave.clientWidth / 7)));
+      var seed = 7;
+      function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+      for (var i = 0; i < n; i++) {
+        var t = i / (n - 1);
+        var env = 0.25 + 0.75 * Math.pow(Math.sin(Math.PI * t), 0.7);
+        var body = 0.45 + 0.55 * Math.abs(Math.sin(t * 23) * Math.cos(t * 7.3));
+        var h = Math.max(0.08, Math.min(1, env * body * (0.6 + 0.4 * rnd())));
+        var s = document.createElement('span');
+        s.style.setProperty('--h', (h * 100).toFixed(1) + '%');
+        wave.appendChild(s);
+        bars.push(s);
+      }
+    }
+    build();
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(build, 120); });
+
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      wave.addEventListener('pointermove', function (e) {
+        var r = wave.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width * bars.length;
+        for (var i = 0; i < bars.length; i++) {
+          var d = Math.abs(i - x);
+          var k = Math.max(0, 1 - d / 7);
+          bars[i].style.transform = 'scaleY(' + (1 + k * 0.55).toFixed(3) + ')';
+          bars[i].classList.toggle('hot', d < 1.5);
+        }
+      });
+      wave.addEventListener('pointerleave', function () {
+        bars.forEach(function (b) { b.style.transform = ''; b.classList.remove('hot'); });
+      });
+    }
+
+    // Copy email, with a fallback to selecting the text.
+    var btn = document.getElementById('copy');
+    var email = 'joshtmoran@gmail.com';
+    btn.addEventListener('click', function () {
+      function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = 'Copy email'; }, 1600); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(function () { done('Copied'); }, fallback);
+      } else { fallback(); }
+      function fallback() {
+        var rng = document.createRange();
+        rng.selectNodeContents(document.getElementById('email'));
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(rng);
+        done('Press Ctrl/Cmd+C');
+      }
+    });
+  })();
+</script>
+</body>
+</html>
